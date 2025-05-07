@@ -4,12 +4,17 @@ namespace App\Filament\Team\Resources;
 
 use App\Filament\Resources\MeetingResource\Pages;
 use App\Models\Meeting;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Infolists\Components\ViewEntry;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
@@ -41,21 +46,40 @@ class MeetingResource extends Resource
     {
         return $form
             ->schema([
+                Hidden::make('team_id')->default(auth()->user()->team_id),
                 Fieldset::make('Main data')
                     ->schema([
                         TextInput::make('type')
                             ->required(),
                         Select::make('membership_id')
                             ->relationship('membership', 'name')
-                            ->searchable(),
-                        TextInput::make('visibilty')
+                            ->searchable()
+                            ->required(),
+                        Select::make('visibility')
                             ->required()
-                            ->integer(),
+                            ->options([
+                                1 => 'öffentlich',
+                                2 => 'intern'
+                            ])
+                            ->default(1),
                     ])->columns(3),
                 Fieldset::make('Main data')
                     ->schema([
-                        MarkdownEditor::make('protocol')
-                    ])->columns(1),
+                        RichEditor::make('protocol')
+                            ->required()
+                            ->columnSpanFull()
+                            ->hintAction(
+                                fn(Get $get) => Action::make('previewContent')
+                                    ->slideOver()
+                                    ->infolist([
+                                        ViewEntry::make('contentPreview')
+                                            ->view('preview-content', [
+                                                'content' => $get('protocol') ?? '',
+                                            ])
+                                    ])
+                            ),
+
+                    ])->columnSpanFull(),
 
                 Placeholder::make('created_at')
                     ->label('Created Date')

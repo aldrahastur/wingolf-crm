@@ -45,18 +45,14 @@ class User extends Authenticatable implements FilamentUser, HasName, HasTenants,
         Notifiable,
         SoftDeletes;
 
-    public function canAccessPanel(Panel $panel): bool
+    public function canAccessPanel(Panel $panel) : bool
     {
-        if($panel->getId() == 'admin' && auth()->user()->isSuperAdmin()) {
+        if(auth()->user()->isSuperAdmin()) {
             return true;
-        }
-        if($panel->getId() == 'team') {
-            if (auth()->user()->isSuperAdmin() ) {
-                return true;
-            } else {
-                return true;
-            }
-
+        } else if($panel->getId() == 'team' && $this->getDefaultTeam($panel)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -182,6 +178,11 @@ class User extends Authenticatable implements FilamentUser, HasName, HasTenants,
     public function getTenants(Panel $panel): Collection
     {
         return $this->teams;
+    }
+
+    public function getDefaultTeam(Panel $panel): ?Model
+    {
+        return $this->currentTeam ?? $this->teams()->first();
     }
 
     public function canAccessTenant(Model $tenant): bool

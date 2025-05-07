@@ -16,14 +16,15 @@ class Meeting extends Model
     protected $fillable = [
         'type',
         'team_id',
-        'visibilty',
+        'membership_id',
+        'visibility',
         'protocol',
         'file_path',
     ];
 
     public function team(): BelongsToMany
     {
-        return $this->belongsToMany(Team::class, 'membership_team');
+        return $this->belongsToMany(Team::class);
     }
 
     public function membership(): BelongsTo
