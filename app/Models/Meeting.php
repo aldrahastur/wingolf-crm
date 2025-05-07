@@ -14,7 +14,7 @@ class Meeting extends Model
     use HasUlids, SoftDeletes;
 
     protected $fillable = [
-        'type',
+        'title',
         'team_id',
         'membership_id',
         'visibility',
