@@ -2,12 +2,10 @@
 
 namespace App\Filament\Team\Resources;
 
-use App\Filament\Resources\MeetingResource\Pages;
 use App\Models\Meeting;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
@@ -49,7 +47,7 @@ class MeetingResource extends Resource
                 Hidden::make('team_id')->default(auth()->user()->team_id),
                 Fieldset::make('Main data')
                     ->schema([
-                        TextInput::make('type')
+                        TextInput::make('title')
                             ->required(),
                         Select::make('membership_id')
                             ->relationship('membership', 'name')
@@ -95,14 +93,11 @@ class MeetingResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('type'),
-
-                TextColumn::make('team.name')
+                TextColumn::make('title'),
+                TextColumn::make('membership.name')
                     ->searchable()
                     ->sortable(),
-
                 TextColumn::make('visibilty'),
-
                 TextColumn::make('file_path'),
             ])
             ->filters([
