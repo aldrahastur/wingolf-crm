@@ -2,6 +2,8 @@
 
 namespace App\Filament\Team\Resources;
 
+
+use App\Filament\Team\Resources\BoardMemberRelationManagerResource\RelationManagers\BoardMembersRelationManager;
 use App\Filament\Team\Resources\MembershipResource\Pages;
 use App\Models\Membership;
 use Filament\Forms;
@@ -56,6 +58,13 @@ class MembershipResource extends Resource
             'index' => Pages\ListMemberships::route('/'),
             'create' => Pages\CreateMembership::route('/create'),
             'edit' => Pages\EditMembership::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            BoardMembersRelationManager::class
         ];
     }
 }

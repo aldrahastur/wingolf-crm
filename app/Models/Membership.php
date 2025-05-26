@@ -46,4 +46,14 @@ class Membership extends Model implements Wallet
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function boardMembers()
+    {
+        return $this->hasMany(BoardMember::class);
+    }
+
+    public function currenBoard()
+    {
+
+    }
 }
