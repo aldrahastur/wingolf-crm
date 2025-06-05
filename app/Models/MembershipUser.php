@@ -14,5 +14,15 @@ class MembershipUser extends Pivot
     protected $fillable = [
         'membership_id',
         'user_id',
+        'fee_required',
     ];
+
+    protected $casts = [
+        'fee_required' => 'boolean',
+    ];
+
+    public function isFeeRequired(): bool
+    {
+        return $this->fee_required;
+    }
 }

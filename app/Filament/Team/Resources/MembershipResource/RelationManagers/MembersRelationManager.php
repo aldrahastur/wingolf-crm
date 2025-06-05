@@ -4,8 +4,7 @@ namespace App\Filament\Team\Resources\MembershipResource\RelationManagers;
 
 use App\Models\User;
 use Filament\Facades\Filament;
-use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -21,6 +20,7 @@ class MembersRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('full_name')->label('Name')->searchable(),
                 Tables\Columns\TextColumn::make('email')->label('E-Mail')->searchable(),
+                Tables\Columns\IconColumn::make('fee_required')->label('Gebührenpflichtig')->boolean(),
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()

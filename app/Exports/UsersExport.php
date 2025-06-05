@@ -37,15 +37,22 @@ class UsersExport implements FromCollection, WithHeadings
                 'First name' => $user->first_name,
                 'Last name' => $user->last_name,
                 'Email' => $user->email,
-                'Admission Date' => (string) $user->admission_date,
+                'Phone' => $user->phone,
+                'Mobile' => $user->mobile,
+                'Address' => $user->address,
+                'ZIP Code' => $user->zip_code,
+                'City' => $user->status,
+                'Birthday' => ($user->birthday) ? $user->birthday->format('d.m.Y') : null,
+                'Admission Date' => ($user->admission_date) ? $user->admission_date->format('d.m.Y') : null,
                 'Status' => ($user->status == 1) ? 'Active' : 'Inactive',
             ];
 
             if ($this->membershipId) {
                 $membership = $user->memberships()->find($this->membershipId);
                 $mappedValues['Membership'] = $membership->name;
-                $mappedValues['Membehip Admission Date'] = $membership->pivot->membership_admission_date;
+                $mappedValues['Membership Admission Date'] = $membership->pivot->membership_admission_date;
                 $mappedValues['Membership Leave Date'] = $membership->pivot->membership_leave_date;
+                $mappedValues['Membership fee required'] = $membership->pivot->fee_required;
             }
 
             return $mappedValues;
@@ -62,6 +69,12 @@ class UsersExport implements FromCollection, WithHeadings
             'First Name',
             'Last Name',
             'Email',
+            'Phone',
+            'Mobile',
+            'Address',
+            'ZIP Code',
+            'City',
+            'Birthday',
             'Admission Date',
             'Status',
         ];
@@ -70,6 +83,7 @@ class UsersExport implements FromCollection, WithHeadings
             $headings[] = 'Membership';
             $headings[] = 'Membership Admission Date';
             $headings[] = 'Membership Leave Date';
+            $headings[] = 'Membership fee required';
         }
 
         return $headings;

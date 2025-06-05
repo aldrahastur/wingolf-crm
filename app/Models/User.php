@@ -111,6 +111,8 @@ class User extends Authenticatable implements FilamentUser, HasName, HasTenants,
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'admission_date' => 'date',
+            'birthday' => 'date',
         ];
     }
 
@@ -217,7 +219,7 @@ class User extends Authenticatable implements FilamentUser, HasName, HasTenants,
     public function memberships(): BelongsToMany
     {
         return $this->belongsToMany(Membership::class)
-            ->withPivot(['membership_admission_date', 'membership_leave_date'])
+            ->withPivot(['membership_admission_date', 'membership_leave_date', 'fee_required'])
             ->withTimestamps();
     }
 
