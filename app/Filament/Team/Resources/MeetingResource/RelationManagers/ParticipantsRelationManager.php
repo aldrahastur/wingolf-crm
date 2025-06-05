@@ -45,7 +45,7 @@ class ParticipantsRelationManager extends RelationManager
                         'pending' => 'Ausstehend',
                         'declined' => 'Abgelehnt',
                     ])
-                    ->default('pending')
+                    ->default('confirmed')
                     ->required(),
 
                 TextInput::make('comment')
