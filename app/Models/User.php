@@ -83,6 +83,12 @@ class User extends Authenticatable implements FilamentUser, HasName, HasTenants,
         'birthday',
         'death_date',
         'remember_token',
+        'salutation',
+        'title',
+        'letter_salutation',
+        'full_name',
+        'balance',
+        'balanceInt',
     ];
 
     /**
