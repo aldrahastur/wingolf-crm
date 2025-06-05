@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Mail\MeetingProtocolMail;
 use App\Models\Meeting;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
