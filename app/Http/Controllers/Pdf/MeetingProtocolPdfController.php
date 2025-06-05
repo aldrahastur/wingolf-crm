@@ -19,9 +19,6 @@ class MeetingProtocolPdfController extends Controller
         Storage::put("protocols/protokoll_$meeting->id.pdf", $pdf->output());
 
         // Mail mit PDF verschicken
-
-        dump("protocols/protokoll_$meeting->id.pdf");
-        dd($meeting);
         Mail::to('email@willihelwig.com')->send(new MeetingProtocolMail($meeting, "protocols/protokoll_$meeting->id.pdf"));
     }
 }
