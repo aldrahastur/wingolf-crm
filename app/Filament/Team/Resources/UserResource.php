@@ -152,7 +152,6 @@ class UserResource extends Resource
                     ->nullable()->default(0) ,
                 Tables\Filters\TernaryFilter::make('leaving_date')
                     ->label('Ausgetreten')
-                    ->hidden()
                     ->nullable()->default(0) ,
                 Tables\Filters\TrashedFilter::make(),
                 Tables\Filters\SelectFilter::make('memberships')
