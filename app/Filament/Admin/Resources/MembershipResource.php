@@ -30,6 +30,7 @@ class MembershipResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->searchable(),
+                Tables\Columns\TextColumn::make('team.name')->searchable(),
                 Tables\Columns\TextColumn::make('settlement_period')->searchable(),
             ])
             ->filters([
