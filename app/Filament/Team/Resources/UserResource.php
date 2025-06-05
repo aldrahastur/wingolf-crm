@@ -108,6 +108,9 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('letter_salutation')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('last_name')
                     ->label('Customer Name')
                     ->formatStateUsing(function ($state, User $user) {
