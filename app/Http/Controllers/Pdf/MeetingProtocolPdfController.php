@@ -16,9 +16,12 @@ class MeetingProtocolPdfController extends Controller
         // PDF erstellen
         $pdf = Pdf::loadView('pdf.meeting-protocol', ['meeting' => $meeting]);
 
-        Storage::put("protocols/protokoll_{$meeting->id}.pdf", $pdf->output());
+        Storage::put("protocols/protokoll_$meeting->id.pdf", $pdf->output());
 
         // Mail mit PDF verschicken
-        Mail::to('email@willihelwig.com')->send(new MeetingProtocolMail($meeting, "protocols/protokoll_{$meeting->id}.pdf"));
+
+        dump("protocols/protokoll_$meeting->id.pdf");
+        dd($meeting);
+        Mail::to('email@willihelwig.com')->send(new MeetingProtocolMail($meeting, "protocols/protokoll_$meeting->id.pdf"));
     }
 }
