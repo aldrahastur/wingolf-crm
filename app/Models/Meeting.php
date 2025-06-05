@@ -32,8 +32,8 @@ class Meeting extends Model
         return $this->belongsTo(Membership::class);
     }
 
-    public function users(): HasMany
+    public function participants(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(MeetingParticipant::class);
     }
 }

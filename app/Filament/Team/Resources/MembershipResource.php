@@ -3,13 +3,15 @@
 namespace App\Filament\Team\Resources;
 
 
-use App\Filament\Team\Resources\BoardMemberRelationManagerResource\RelationManagers\BoardMembersRelationManager;
 use App\Filament\Team\Resources\MembershipResource\Pages;
+use App\Filament\Team\Resources\MembershipResource\RelationManagers\BoardMembersRelationManager;
+use App\Filament\Team\Resources\MembershipResource\RelationManagers\MembersRelationManager;
 use App\Models\Membership;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class MembershipResource extends Resource
@@ -27,17 +29,25 @@ class MembershipResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name'),
-                Forms\Components\TextInput::make('settlement_period')->label('Settlement_period'),
-            ]);
+                Forms\Components\TextInput::make('member_fee')
+                    ->numeric()
+                    ->inputMode('decimal'),
+                Forms\Components\TextInput::make('settlement_period')
+                    ->label('Settlement_period')
+                    ->numeric()
+                    ->hint('in months'),
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('settlement_period')->searchable(),
-                Tables\Columns\TextColumn::make('balance'),
+                TextColumn::make('name')->searchable(),
+                TextColumn::make('member_fee')->money('EUR'),
+                TextColumn::make('settlement_period')->searchable(),
+                TextColumn::make('balance'),
+                TextColumn::make('users_count')->counts('users')
             ])
             ->filters([
 
@@ -64,7 +74,8 @@ class MembershipResource extends Resource
     public static function getRelations(): array
     {
         return [
-            BoardMembersRelationManager::class
+            MembersRelationManager::class,
+            BoardMembersRelationManager::class,
         ];
     }
 }

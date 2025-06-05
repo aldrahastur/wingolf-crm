@@ -10,8 +10,9 @@ return new class extends Migration {
         Schema::create('meetings', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('team_id');
-            $table->string('title');
             $table->foreignUlid('membership_id')->nullable();
+            $table->tinyInteger('type');
+            $table->string('title');
             $table->tinyInteger('visibility')->default(1);
             $table->longText('protocol');
             $table->string('file_path')->nullable();

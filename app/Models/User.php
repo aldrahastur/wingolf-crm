@@ -143,6 +143,23 @@ class User extends Authenticatable implements FilamentUser, HasName, HasTenants,
         );
     }
 
+    public function getFullNameAttribute(): string
+    {
+        return trim("{$this->first_name} {$this->last_name}");
+    }
+
+    public function getTitleAttribute(): string
+    {
+        return $this->full_name;
+    }
+    /**
+     * Wird von Filament für die Anzeige im recordSelect verwendet.
+     */
+    public function __toString(): string
+    {
+        return $this->full_name;
+    }
+
     public function getResetPasswordUrl(string $token, array $parameters = []): string
     {
         return URL::signedRoute(

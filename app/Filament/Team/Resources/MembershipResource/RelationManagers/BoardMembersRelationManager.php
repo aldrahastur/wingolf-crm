@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Filament\Team\Resources\BoardMemberRelationManagerResource\RelationManagers;
+namespace App\Filament\Team\Resources\MembershipResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BoardMembersRelationManager extends RelationManager
 {

@@ -2,13 +2,16 @@
 
 namespace App\Filament\Team\Resources;
 
+use App\Filament\Team\Resources\MeetingResource\RelationManagers\ParticipantsRelationManager;
 use App\Models\Meeting;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -44,48 +47,66 @@ class MeetingResource extends Resource
     {
         return $form
             ->schema([
-                Hidden::make('team_id')->default(auth()->user()->team_id),
-                Fieldset::make('Main data')
-                    ->schema([
-                        TextInput::make('title')
-                            ->required(),
-                        Select::make('membership_id')
-                            ->relationship('membership', 'name')
-                            ->searchable()
-                            ->required(),
-                        Select::make('visibility')
-                            ->required()
-                            ->options([
-                                1 => 'öffentlich',
-                                2 => 'intern'
-                            ])
-                            ->default(1),
-                    ])->columns(3),
-                Fieldset::make('Main data')
-                    ->schema([
-                        RichEditor::make('protocol')
-                            ->required()
-                            ->columnSpanFull()
-                            ->hintAction(
-                                fn(Get $get) => Action::make('previewContent')
-                                    ->slideOver()
-                                    ->infolist([
-                                        ViewEntry::make('contentPreview')
-                                            ->view('preview-content', [
-                                                'content' => $get('protocol') ?? '',
+                Tabs::make('Tabs')
+                    ->tabs([
+                        Tabs\Tab::make('Inhalt')
+                            ->schema([
+                                Hidden::make('team_id')->default(auth()->user()->team_id),
+                                Fieldset::make('Main data')
+                                    ->schema([
+                                        TextInput::make('title')
+                                            ->required(),
+                                        Select::make('membership_id')
+                                            ->relationship('membership', 'name')
+                                            ->searchable()
+                                            ->required(),
+                                        Select::make('visibility')
+                                            ->required()
+                                            ->options([
+                                                1 => 'öffentlich',
+                                                2 => 'intern'
                                             ])
+                                            ->default(1),
+                                    ])->columns(3),
+                                Fieldset::make('Main data')
+                                    ->schema([
+                                        RichEditor::make('protocol')
+                                            ->required()
+                                            ->columnSpanFull()
+                                            ->hintAction(
+                                                fn(Get $get) => Action::make('previewContent')
+                                                    ->slideOver()
+                                                    ->infolist([
+                                                        ViewEntry::make('contentPreview')
+                                                            ->view('preview-content', [
+                                                                'content' => $get('protocol') ?? '',
+                                                            ])
+                                                    ])
+                                            ),
+                                    ])->columnSpanFull(),
+
+                                Placeholder::make('created_at')
+                                    ->label('Created Date')
+                                    ->content(fn(?Meeting $record): string => $record?->created_at?->diffForHumans() ?? '-'),
+
+                                Placeholder::make('updated_at')
+                                    ->label('Last Modified Date')
+                                    ->content(fn(?Meeting $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
+                            ]),
+
+                        // Der RelationManager wird in diesem Tab eingebettet
+                        Tabs\Tab::make('Teilnehmer')
+                            ->schema([
+                                Section::make()
+                                    ->schema([
+                                        // Das ist der Trick: Wir nutzen einen leeren Abschnitt
                                     ])
-                            ),
-
-                    ])->columnSpanFull(),
-
-                Placeholder::make('created_at')
-                    ->label('Created Date')
-                    ->content(fn(?Meeting $record): string => $record?->created_at?->diffForHumans() ?? '-'),
-
-                Placeholder::make('updated_at')
-                    ->label('Last Modified Date')
-                    ->content(fn(?Meeting $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
+                                    // Der RelationManager wird als extra Attribute übergeben
+                                    ->extraAttributes([
+                                        'relationManager' => ParticipantsRelationManager::class,
+                                    ]),
+                            ]),
+                    ])->columnSpanFull()
             ]);
     }
 
@@ -97,8 +118,8 @@ class MeetingResource extends Resource
                 TextColumn::make('membership.name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('visibilty'),
-                TextColumn::make('file_path'),
+                TextColumn::make('date')
+                    ->date(),
             ])
             ->filters([
                 TrashedFilter::make(),
@@ -116,6 +137,13 @@ class MeetingResource extends Resource
                     ForceDeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            ParticipantsRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
