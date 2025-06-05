@@ -135,7 +135,7 @@
             <!-- List -->
             <ul class="flex flex-wrap items-center">
                 <li class="inline-block pe-4 text-xs">
-                    <a class="text-xs text-gray-500 underline hover:text-gray-800 hover:decoration-2 focus:outline-hidden focus:decoration-2 dark:text-neutral-500 dark:hover:text-neutral-400" href="https://github.com/aldrahastur/wingolf-crm">
+                    <a class="text-xs text-gray-500 underline hover:text-gray-800 hover:decoration-2 focus:outline-hidden focus:decoration-2 dark:text-neutral-500 dark:hover:text-neutral-400" href="https://github.com/aldrahastur/wingolf-crm" target="_blank">
                         Github
                     </a>
                 </li>
