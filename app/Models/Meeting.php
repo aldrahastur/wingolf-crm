@@ -22,6 +22,10 @@ class Meeting extends Model
         'file_path',
     ];
 
+    protected $casts = [
+        'date' => 'datetime:d.m.Y',
+    ];
+
     public function team(): BelongsToMany
     {
         return $this->belongsToMany(Team::class);
