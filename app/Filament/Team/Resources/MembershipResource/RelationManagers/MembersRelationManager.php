@@ -4,6 +4,10 @@ namespace App\Filament\Team\Resources\MembershipResource\RelationManagers;
 
 use App\Models\User;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -13,6 +17,21 @@ class MembersRelationManager extends RelationManager
 {
     protected static string $relationship = 'users';
     protected static ?string $recordTitleAttribute = 'last_name';
+
+    public function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                DatePicker::make('membership_admission_date')
+                    ->format('Y-m-d')
+                    ->required(),
+                DatePicker::make('membership_admission_date')
+                    ->format('Y-m-d')
+                    ->required(),
+                Toggle::make('fee_required'),
+                Toggle::make('voluntary_payer')
+            ]);
+    }
 
     public function table(Tables\Table $table): Tables\Table
     {
