@@ -21,9 +21,11 @@ class MembersRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('full_name')->label('Name')->searchable(),
                 Tables\Columns\TextColumn::make('email')->label('E-Mail')->searchable(),
                 Tables\Columns\TextColumn::make('membership_admission_date')->label('Admission date')
+                    ->date('d.m.Y')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('membership_leave_date')
+                    ->date('d.m.Y')
                     ->sortable()
                     ->label('Leave date')->searchable(),
                 Tables\Columns\IconColumn::make('fee_required')->label('Gebührenpflichtig')->boolean(),
@@ -37,6 +39,7 @@ class MembersRelationManager extends RelationManager
                     ->recordTitle(fn ($record) => $record->full_name),
             ])
             ->actions([
+                Tables\Actions\EditAction::make(),
                 Tables\Actions\DetachAction::make(),
             ])
             ->bulkActions([
