@@ -112,7 +112,9 @@ class User extends Authenticatable implements FilamentUser, HasName, HasTenants,
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'admission_date' => 'date',
+            'leaving_date' => 'date',
             'birthday' => 'date',
+            'death_date' => 'date',
         ];
     }
 
