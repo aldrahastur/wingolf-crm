@@ -52,8 +52,8 @@ class UsersExport implements FromCollection, WithHeadings
                 $mappedValues['Membership'] = $membership->name;
                 $mappedValues['Membership Admission Date'] = $membership->pivot->membership_admission_date;
                 $mappedValues['Membership Leave Date'] = $membership->pivot->membership_leave_date;
-                $mappedValues['Membership fee required'] = $membership->pivot->fee_required;
-                $mappedValues['Membership voluntary payer'] = $membership->pivot->voluntary_payer;
+                $mappedValues['Membership fee required'] = "{$membership->pivot->fee_required}";
+                $mappedValues['Membership voluntary payer'] = "{$membership->pivot->voluntary_payer}";
             }
 
             return $mappedValues;
