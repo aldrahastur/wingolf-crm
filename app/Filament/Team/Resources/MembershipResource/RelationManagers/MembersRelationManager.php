@@ -23,11 +23,9 @@ class MembersRelationManager extends RelationManager
         return $form
             ->schema([
                 DatePicker::make('membership_admission_date')
-                    ->format('Y-m-d')
-                    ->required(),
+                    ->format('Y-m-d'),
                 DatePicker::make('membership_admission_date')
-                    ->format('Y-m-d')
-                    ->required(),
+                    ->format('Y-m-d'),
                 Toggle::make('fee_required'),
                 Toggle::make('voluntary_payer')
             ]);
