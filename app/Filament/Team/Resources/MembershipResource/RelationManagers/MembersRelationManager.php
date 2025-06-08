@@ -24,7 +24,7 @@ class MembersRelationManager extends RelationManager
             ->schema([
                 DatePicker::make('membership_admission_date')
                     ->format('Y-m-d'),
-                DatePicker::make('membership_admission_date')
+                DatePicker::make('membership_leave_date')
                     ->format('Y-m-d'),
                 Toggle::make('fee_required'),
                 Toggle::make('voluntary_payer')
