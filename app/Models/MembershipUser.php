@@ -14,8 +14,10 @@ class MembershipUser extends Pivot
     protected $fillable = [
         'membership_id',
         'user_id',
+        'membership_admission_date',
+        'membership_leave_date',
         'fee_required',
-        'voluntary payer'
+        'voluntary_payer'
     ];
 
     protected $casts = [
