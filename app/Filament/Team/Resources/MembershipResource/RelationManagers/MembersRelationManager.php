@@ -20,8 +20,12 @@ class MembersRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('full_name')->label('Name')->searchable(),
                 Tables\Columns\TextColumn::make('email')->label('E-Mail')->searchable(),
-                Tables\Columns\TextColumn::make('membership_admission_date')->label('E-Mail')->searchable(),
-                Tables\Columns\TextColumn::make('membership_leave_date')->label('E-Mail')->searchable(),
+                Tables\Columns\TextColumn::make('membership_admission_date')->label('Admission date')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('membership_leave_date')
+                    ->sortable()
+                    ->label('Leave date')->searchable(),
                 Tables\Columns\IconColumn::make('fee_required')->label('Gebührenpflichtig')->boolean(),
                 Tables\Columns\IconColumn::make('voluntary_payer')->label('Freiwilliger Zahler')->boolean(),
             ])
