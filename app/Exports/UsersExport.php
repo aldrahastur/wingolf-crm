@@ -43,7 +43,9 @@ class UsersExport implements FromCollection, WithHeadings
                 'ZIP Code' => $user->zip_code,
                 'City' => $user->status,
                 'Birthday' => ($user->birthday) ? $user->birthday->format('d.m.Y') : null,
-                'Admission Date' => ($user->admission_date) ? $user->admission_date->format('d.m.Y') : null,
+                'Death date' => ($user->birthday) ? $user->birthday->format('d.m.Y') : null,
+                'Admission date' => ($user->admission_date) ? $user->admission_date->format('d.m.Y') : null,
+                'Leaving date' => ($user->admission_date) ? $user->admission_date->format('d.m.Y') : null,
                 'Status' => ($user->status == 1) ? 'Active' : 'Inactive',
             ];
 
@@ -76,7 +78,9 @@ class UsersExport implements FromCollection, WithHeadings
             'ZIP Code',
             'City',
             'Birthday',
+            'Death date',
             'Admission Date',
+            'Leaving date',
             'Status',
         ];
 
