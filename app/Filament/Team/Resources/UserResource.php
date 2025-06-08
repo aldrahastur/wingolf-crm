@@ -138,7 +138,15 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('admission_date')
                     ->date('d.m.Y')->sortable(),
+                Tables\Columns\TextColumn::make('leaving_date')
+                    ->date('d.m.Y')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('birthday')
+                    ->date('d.m.Y')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('death_date')
                     ->date('d.m.Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
