@@ -15,6 +15,7 @@ class MembershipUser extends Pivot
         'membership_id',
         'user_id',
         'fee_required',
+        'voluntary payer'
     ];
 
     protected $casts = [
